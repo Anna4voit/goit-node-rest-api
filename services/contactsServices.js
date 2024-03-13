@@ -7,7 +7,7 @@ import { nanoid } from "nanoid";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const contactsPath = path.join(__dirname, "db", "contacts.json");
+const contactsPath = path.join(__dirname, "..", "db", "contacts.json");
 
 async function listContacts() {
   const contacts = await fs.readFile(contactsPath);
@@ -44,7 +44,7 @@ async function removeContact(id) {
   return removedContact;
 }
 
-async function updateContact(id, data) {
+async function updateById(id, data) {
   const allContacts = await listContacts();
   const index = allContacts.findIndex((contact) => contact.id === id);
   if (index === -1) {
@@ -57,10 +57,4 @@ async function updateContact(id, data) {
   return allContacts[index];
 }
 
-export {
-  listContacts,
-  getContactById,
-  addContact,
-  removeContact,
-  updateContact,
-};
+export { listContacts, getContactById, addContact, removeContact, updateById };
