@@ -69,9 +69,14 @@ export const updateContact = async (req, res) => {
 
 export const updateStatusContact = async (req, res) => {
   const { id } = req.params;
-  const contact = await contactsService.updateContact(id, req.body, {
-    new: true,
-  });
+  const { _id: owner } = req.user;
+  const contact = await contactsService.updateContactByFilter(
+    { owner, _id: id },
+    req.body,
+    {
+      new: true,
+    }
+  );
   if (!contact) {
     throw HttpError(404);
   }
