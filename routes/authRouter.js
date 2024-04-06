@@ -7,6 +7,8 @@ import {
 } from "../schemas/usersSchemas.js";
 import validateBody from "../helpers/validateBody.js";
 import authenticate from "../middlewares/authenticate.js";
+import upload from "../middlewares/upload.js";
+
 const authRouter = express.Router();
 
 authRouter.post(
@@ -26,6 +28,13 @@ authRouter.patch(
   authenticate,
   validateBody(userSubSchema),
   authControllers.subUpdate
+);
+
+authRouter.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  authControllers.updateAvatar
 );
 
 export default authRouter;
