@@ -18,3 +18,7 @@ export const userSubSchema = Joi.object({
     .valid(...subList)
     .required(),
 });
+
+export const userEmailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegepxp).required(),
+});
