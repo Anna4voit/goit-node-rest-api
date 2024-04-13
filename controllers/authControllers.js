@@ -53,7 +53,7 @@ const register = async (req, res) => {
   });
 };
 
-const verifyEmail = async (req, res) => {
+const verificationRequest = async (req, res) => {
   const { verificationToken } = req.params;
   const user = await authServices.findUser({ verificationToken });
   if (!user) {
@@ -61,7 +61,7 @@ const verifyEmail = async (req, res) => {
   }
   await authServices.updateUser(
     { _id: user._id },
-    { verify: true, verificationCode: "" }
+    { verify: true, verificationToken: "null" }
   );
   res.status(200).json({
     message: "Verification successful",
@@ -175,7 +175,7 @@ const updateAvatar = async (req, res) => {
 
 export default {
   register: ctrlWrapper(register),
-  verifyEmail: ctrlWrapper(verifyEmail),
+  verificationRequest: ctrlWrapper(verificationRequest),
   resendVerify: ctrlWrapper(resendVerify),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
